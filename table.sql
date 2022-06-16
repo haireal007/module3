@@ -1,1 +1,1 @@
-SELECT * FROM `student-management`.student;
+SELECT * FROM `student-management`.student;student
