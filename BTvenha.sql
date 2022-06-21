@@ -48,11 +48,10 @@ select avg(markID) as DiemTB from marks;
 select SubjectName from subjects where SubjectID =(select SubjectID from marks where MarkID = (select max(markID) from marks));
 
 -- cau5: Danh so thu tu cua diem theo chieu giam:
-select  marks,count(markID) s1 from marks group by marks ;
-select stt, markid from marks order by marks desc;
+select stt, markID from marks order by marks desc;
 
 -- cau6: Thay doi kieu du lieu cua cot SubjectName trong bang Subjects thanh nvarchar(max):
-alter table subjects modify column SubjectName varchar(255) not null;
+alter table subjects modify column SubjectName nvarchar(255) not null;
 
 -- cau7: Cap nhat them dong chu « Day la mon hoc «  vao truoc cac ban ghi tren cot SubjectName trong bang Subjects:
 update subjects set `subjectName` = (select subjectName subjects where subjectId = 1);
@@ -66,6 +65,9 @@ alter table students
 add status int not null ;
 
 -- cau10: Xoa hoc vien co StudentID la 1:
+ALTER TABLE classstudent DROP FOREIGN KEY studentId;
+ALTER TABLE marks DROP FOREIGN KEY studentId;
+alter table students drop constraint studentId;
 DELETE FROM students WHERE studentId = 1;
 
 -- cau11:Trong bang Student them mot column Status co kieu du lieu la Bit va co gia tri Default la 1:
