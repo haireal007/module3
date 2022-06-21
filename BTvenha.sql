@@ -65,8 +65,8 @@ alter table students
 add status int not null ;
 
 -- cau10: Xoa hoc vien co StudentID la 1:
-ALTER TABLE classstudent DROP FOREIGN KEY studentId;
-ALTER TABLE marks DROP FOREIGN KEY studentId;
+ALTER TABLE classstudent DROP constraint studentId;
+ALTER TABLE marks DROP constraint studentId;
 alter table students drop constraint studentId;
 DELETE FROM students WHERE studentId = 1;
 
