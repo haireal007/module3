@@ -42,20 +42,20 @@ select *from students;
 select *from classes;
 
 -- cau3: Tinh diem trung binh :
-select avg(mark) as DiemTB from Mark;
+select avg(markID) as DiemTB from marks;
 
 -- cau4: Hien thi mon hoc nao co hoc sinh thi duoc diem cao nhat:
-select SubjectName from Subject where SubjectID =(select SubjectID from mark where Mark = (select max(mark) from mark));
+select SubjectName from subjects where SubjectID =(select SubjectID from marks where MarkID = (select max(markID) from marks));
 
 -- cau5: Danh so thu tu cua diem theo chieu giam:
-select  mark,count(mark) s1 from mark group by mark ;
-select stt, mark from mark order by mark desc;
+select  marks,count(markID) s1 from marks group by marks ;
+select stt, markid from marks order by marks desc;
 
 -- cau6: Thay doi kieu du lieu cua cot SubjectName trong bang Subjects thanh nvarchar(max):
-alter table subject modify column SubjectName nvarchar(255) not null;
+alter table subjects modify column SubjectName varchar(255) not null;
 
 -- cau7: Cap nhat them dong chu « Day la mon hoc «  vao truoc cac ban ghi tren cot SubjectName trong bang Subjects:
-update subject set `subjectName` = (select subjectName subject where subjectId = 1);
+update subjects set `subjectName` = (select subjectName subjects where subjectId = 1);
 
 -- cau8: Viet Check Constraint de kiem tra do tuoi nhap vao trong bang Student yeu cau Age >15 va Age < 50:
 alter table Students 
