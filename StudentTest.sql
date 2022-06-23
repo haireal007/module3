@@ -33,7 +33,7 @@ insert into studenttest values(1,1,'2006-07-17',8),(1,2,'2006-07-18',5),(1,3,'20
 -- điểm thi và ngày thi giống như hình sau:
 
 create view danhsachdiemthi as 
-select ROW_NUMBER() OVER (ORDER BY  S.studentName)  STT,  S.studentName 'student name',T.testname 'Test name',
+select ROW_NUMBER() OVER (ORDER BY  S.studentName)  STT,  S.studentName,T.testname,
 ST.mark, ST.datetest 
 from studenttest ST join test T on ST.testid =T.testid join students S 	on ST.studentid = S.studentid;
 select*from danhsachdiemthi;
@@ -67,4 +67,28 @@ from danhsachdiemtrungbinh;
 select*from diemtrungbinhmax ;
 
 -- 7.Hiển thị điểm thi cao nhất của từng môn học. Danh sách phải được sắp xếp theo tên môn học như sau:
+create view danhsachdiemthiMax as 
+select ROW_NUMBER() OVER (ORDER BY  danhsachdiemthi.testname) STT,  danhsachdiemthi.testname, max(mark) 'maxmark'
+from danhsachdiemthi
+group by danhsachdiemthi.testname
+order by  danhsachdiemthi.testname ASC;
+
+-- 8.Hiển thị danh sách tất cả các học viên
+--  và môn học mà các học viên đó đã thi nếu học viên chưa thi môn nào thì phần tên môn học để Null như sau:
+select ROW_NUMBER() OVER (ORDER BY  danhsachdiemthi.testname) STT, danhsachdiemthi.studentname,danhsachdiemthi.testname
+from danhsachdiemthi
+order by  danhsachdiemthi.studentname ASC;
+
+-- 9.Sửa (Update) tuổi của tất cả các học viên mỗi người lên một tuổi.
+update students set studentage = studentage + 1
+where studentid = 1 or studentid = 2 or studentid = 3 or studentid = 4;
+
+-- 10.Thêm trường tên là Status có kiểu Varchar(10) vào bảng Student.
+
+alter table student add statuss varchar(10);
+
+-- 11.Cập nhật(Update) trường Status sao cho những học viên nhỏ hơn 30 tuổi sẽ nhận giá trị ‘Young’,
+--  trường hợp còn lại nhận giá trị ‘Old’
+--  sau đó hiển thị toàn bộ nội dung bảng Student lên như sau:	
+
 
