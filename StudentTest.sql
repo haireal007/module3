@@ -43,6 +43,9 @@ create view danhsachchuathi as
 select*from students
 where not exists (select*from studenttest where students.studentId =studenttest.studentid);
 
+	select students.*
+	from students left join studenttest on studenttest.studentid = students.studentid
+	where mark is null;
 -- 4.Hiển thị danh sách học viên phải thi lại, tên môn học phải thi lại 
 -- và điểm thi(điểm phải thi lại là điểm nhỏ hơn 5) như sau:
 create view danhsachthilai as
@@ -91,4 +94,19 @@ alter table student add statuss varchar(10);
 --  trường hợp còn lại nhận giá trị ‘Old’
 --  sau đó hiển thị toàn bộ nội dung bảng Student lên như sau:	
 
+update students set statuss = 'yuong'
+where studentage<30 and studentid >0;
 
+
+update students set statuss = 'old'
+where studentage>30 and studentid >0
+
+-- 12.Tạo view tên là vwStudentTestList hiển thị danh sách học viên và điểm thi,
+--  danh sách phải sắp xếp tăng dần theo ngày thi như sau:
+
+create view vwStudentTestList as
+select * from danhsachdiemthi
+order by  danhsachdiemthi.datetest ASC;
+
+-- 13.Tạo một trigger tên là tgSetStatus sao cho khi sửa tuổi của học viên thi
+--  trigger này sẽ tự động cập nhật status theo quy tắc sau:	
